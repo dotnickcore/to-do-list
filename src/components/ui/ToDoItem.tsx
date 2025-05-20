@@ -3,7 +3,7 @@ import { useToDoContext } from '../../hooks/useToDoContext';
 import type { IToDo } from '../../interfaces/IToDo';
 
 function ToDoItem({ id, text, completed }: IToDo) {
-  const { handleSetToDoStatus } = useToDoContext();
+  const { handleSetToDoStatus, handleDeleteToDo } = useToDoContext();
 
   const checkToDo = (e: ChangeEvent<HTMLInputElement>) => {
     handleSetToDoStatus(id, e.target.checked);
@@ -44,7 +44,7 @@ function ToDoItem({ id, text, completed }: IToDo) {
           </svg>
         </button>
 
-        <button className="p-1 text-gray-500 hover:text-red-600">
+        <button className="p-1 text-gray-500 hover:text-red-600" onClick={() => handleDeleteToDo(id)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5"
