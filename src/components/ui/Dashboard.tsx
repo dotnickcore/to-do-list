@@ -1,13 +1,9 @@
-import type { IToDo } from '../../interfaces/IToDo'
 import AddToDo from '../AddToDo'
 import ToDoList from '../ToDoList'
+import { useToDoContext } from '../../hooks/useToDoContext';
 
 function Dashboard() {
-  const todosMock: IToDo[] = [{
-    id: 1,
-    text: 'test',
-    completed: false
-  }]
+  const { todos } = useToDoContext();
 
   return (
     <>
@@ -19,7 +15,7 @@ function Dashboard() {
         <hr className="border-gray-200 my-4" />
 
         <div className="space-y-4">
-          <ToDoList todos={todosMock} />
+          <ToDoList todos={todos} />
         </div>
       </div>
     </>

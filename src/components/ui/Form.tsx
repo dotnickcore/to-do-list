@@ -3,11 +3,16 @@ import type { FormProps } from '../../types/FormProps';
 
 function Form<T extends FieldValues>({ 
   formMethods, 
-  onSubmit, 
-  children 
+  onSubmit,
+  children,
+  ...formAttrs
 }: FormProps<T>) {
   return (
-    <form onSubmit={formMethods.handleSubmit(onSubmit)}>
+    <form
+      {...formAttrs}
+      onSubmit={formMethods.handleSubmit(onSubmit)}
+      noValidate
+    >
       {children}
     </form>
   );

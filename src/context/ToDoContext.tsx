@@ -11,7 +11,7 @@ export default function ToDoProvider({ children }: { children: React.ReactNode }
     setToDos((previousToDos) => {
       const newToDo: IToDo = {
         id: Math.random(),
-        text: formData.text,
+        text: formData.text.trim(),
         completed: false
       };
 

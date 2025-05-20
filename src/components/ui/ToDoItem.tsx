@@ -11,8 +11,6 @@ function ToDoItem({id, text, completed}:  IToDo) {
       <span className="text-lg font-medium text-gray-800">
         {text}
       </span>
-      {id}
-      {completed}
     </div>
 
   <div className="flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
