@@ -1,25 +1,44 @@
-import type { ChangeEvent } from 'react';
+import { useState, type ChangeEvent } from 'react';
 import { useToDoContext } from '../../hooks/useToDoContext';
 import type { IToDo } from '../../interfaces/IToDo';
+import EditToDo from '../EditToDo';
 
 function ToDoItem({ id, text, completed }: IToDo) {
-  const { handleSetToDoStatus, handleDeleteToDo } = useToDoContext();
+  const { handleSetToDoStatus, handleDeleteToDo, handleEditToDo } =
+    useToDoContext();
 
+  const [isEditing, setIsEditing] = useState(false);
   const checkToDo = (e: ChangeEvent<HTMLInputElement>) => {
     handleSetToDoStatus(id, e.target.checked);
   };
 
+  if (isEditing) {
+    return (
+      <div className="py-3">
+        <EditToDo
+          todo={{ id, text, completed }}
+          onSave={(id, newText) => {
+            handleEditToDo(id, newText);
+            setIsEditing(false);
+          }}
+          onCancel={() => setIsEditing(false)}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="py-3 group flex items-center justify-between">
-      <div className="flex items-center space-x-3">
+      <div className="flex items-center space-x-3 flex-1">
         <input
           type="checkbox"
-          className="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+          checked={completed}
           onChange={checkToDo}
+          className="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
         />
         <span
-          className={`text-lg font-medium text-gray-800 ${
-            completed ? 'line-through text-gray-400' : ''
+          className={`text-lg font-medium flex-1 ${
+            completed ? 'line-through text-gray-400' : 'text-gray-800'
           }`}
         >
           {text}
@@ -27,7 +46,11 @@ function ToDoItem({ id, text, completed }: IToDo) {
       </div>
 
       <div className="flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
-        <button className="p-1 text-gray-500 hover:text-blue-600">
+        <button
+          onClick={() => setIsEditing(true)}
+          className="p-1 text-gray-500 hover:text-blue-600 transition-colors"
+          aria-label="Edit"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5"
@@ -44,7 +67,11 @@ function ToDoItem({ id, text, completed }: IToDo) {
           </svg>
         </button>
 
-        <button className="p-1 text-gray-500 hover:text-red-600" onClick={() => handleDeleteToDo(id)}>
+        <button
+          onClick={() => handleDeleteToDo(id)}
+          className="p-1 text-gray-500 hover:text-red-600 transition-colors"
+          aria-label="Delete"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5"
