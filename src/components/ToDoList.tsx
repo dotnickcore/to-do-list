@@ -2,8 +2,6 @@ import type { ToDoProps } from '../types/ToDoProps'
 import ToDoItem from './ui/ToDoItem'
 
 function ToDoList({todos}: ToDoProps) {
-
-
   return (
     <>
       {todos.length === 0 && (

@@ -19,9 +19,14 @@ export default function ToDoProvider({ children }: { children: React.ReactNode }
     });
   }
 
+  const handleSetToDoStatus = (id: number, status: boolean) => {
+      setToDos(todos.map(t => t.id === id ? {...t, completed: status} : t))
+  }
+
   const value: ToDoContextValue = {
     todos,
-    handleAddToDo
+    handleAddToDo,
+    handleSetToDoStatus
   }
 
   return (
